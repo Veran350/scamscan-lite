@@ -1,0 +1,27 @@
+<!DOCTYPE html>  
+<html>  
+<head>  
+    <title>ScamScan Lite</title>  
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">  
+</head>  
+<body>  
+    <div class="container">  
+        <h1>🔍 ScamScan Lite</h1>  
+        <form method="POST">  
+            <input type="text" name="url" placeholder="Enter URL (e.g., bwin0023.com)" required>  
+            <button type="submit">Scan</button>  
+        </form>  
+        {% if result %}  
+            <div class="result">  
+                <h3>Results for {{ request.form.url }}</h3>  
+                <p>🕒 Domain Age: {{ result.domain_age_days or 'Unknown' }} days</p>  
+                <p>📊 VirusTotal Reputation:  
+                    Malicious: {{ result.virustotal_stats.get('malicious', 0) }},  
+                    Suspicious: {{ result.virustotal_stats.get('suspicious', 0) }}  
+                </p>  
+                <p>🚨 Google Blacklisted: {{ "Yes" if result.google_blacklisted else "No" }}</p>  
+            </div>  
+        {% endif %}  
+    </div>  
+</body>  
+</html>  
