@@ -55,3 +55,12 @@ def index():
 
 if __name__ == '__main__':  
     app.run(debug=True)  
+    
+# Vercel-specific handler (MANDATORY)  
+def vercel_handler(request):  
+    with app.app_context():  
+        response = app.full_dispatch_request()  
+        return response.get_data()  
+
+if __name__ == '__main__':  
+    app.run()  
